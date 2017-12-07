@@ -14,7 +14,6 @@ Public Class SQLite3ADOWrapper
     Private m_query As QueryBuilder
     Private m_parameters As SQLite3ADOWrapperParameters
     Private m_connection As IDbConnection
-    Private m_transaction As IDbTransaction
 
 #End Region
 
@@ -29,7 +28,7 @@ Public Class SQLite3ADOWrapper
             Return m_parameters
         End Get
         Set(value As IADOWrapperParameters)
-            m_parameters = value
+            m_parameters = DirectCast(value, SQLite3ADOWrapperParameters)
         End Set
     End Property
 
@@ -89,7 +88,7 @@ Public Class SQLite3ADOWrapper
     ''' </summary>
     Friend Sub New(ByVal con As IDbConnection)
         m_connection = con
-        m_transaction = Nothing
+        Transaction = Nothing
         m_query = New QueryBuilder
         m_parameters = New SQLite3ADOWrapperParameters
     End Sub
@@ -107,13 +106,6 @@ Public Class SQLite3ADOWrapper
     ''' </summary>
     ''' <returns></returns>
     Friend Property Transaction As IDbTransaction
-        Get
-            Return m_transaction
-        End Get
-        Set(value As IDbTransaction)
-            m_transaction = value
-        End Set
-    End Property
 
 #End Region
 
@@ -125,7 +117,7 @@ Public Class SQLite3ADOWrapper
     ''' <returns>影響を与えた行数</returns>
     Private Function executeNonQuery() As Integer
         'コマンド生成
-        Dim command = createTextCommand(m_connection)
+        Dim command = createTextCommand(DirectCast(m_connection, SQLite.SQLiteConnection))
 
         'クエリ実行
         Return command.ExecuteNonQuery()
@@ -146,7 +138,7 @@ Public Class SQLite3ADOWrapper
             '実行するSQL
             .CommandText = m_query.ToString
             'トランザクション
-            .Transaction = m_transaction
+            .Transaction = DirectCast(Transaction, SQLite.SQLiteTransaction2)
             'パラメータがあれば利用
             If m_parameters IsNot Nothing Then
                 .Parameters.AddRange(m_parameters.ToArray)
@@ -161,7 +153,7 @@ Public Class SQLite3ADOWrapper
     ''' <returns></returns>
     Private Function executeQuery() As DataTable
         'コマンド生成
-        Dim command = createTextCommand(m_connection)
+        Dim command = createTextCommand(DirectCast(m_connection, SQLite.SQLiteConnection))
 
         'クエリ実行
         Dim ds As New DataSet

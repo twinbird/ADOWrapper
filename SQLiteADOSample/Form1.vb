@@ -1,20 +1,19 @@
 ﻿Option Infer On
 
 Imports System
-Imports System.Data
 Imports System.Windows.Forms
 
 Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        create()
+        executeDdlAndInsertQuery()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        sample()
+        executeQuery()
     End Sub
 
-    Private Sub create()
+    Private Sub executeDdlAndInsertQuery()
         Using accessor As New ADOWrapper.DBAccessor
             Dim q = accessor.CreateQuery
             With q.Query
@@ -26,6 +25,7 @@ Public Class Form1
             q.ExecNonQuery()
         End Using
 
+        Dim insertionRows = 0
         Using accessor As New ADOWrapper.DBAccessor
 
             Try
@@ -35,31 +35,33 @@ Public Class Form1
                 With q1.Query
                     .AppendLine("INSERT INTO test(text) VALUES('test1')")
                 End With
-                q1.ExecNonQuery()
+                insertionRows += q1.ExecNonQuery()
 
                 Dim q2 = accessor.CreateQuery
                 With q2.Query
                     .AppendLine("INSERT INTO test(text) VALUES('test2')")
                 End With
-                q2.ExecNonQuery()
+                insertionRows += q2.ExecNonQuery()
 
                 Dim q3 = accessor.CreateQuery
                 With q3.Query
                     .AppendLine("INSERT INTO test(text) VALUES('test3')")
                 End With
-                q3.ExecNonQuery()
-                q3.ToString()
+                insertionRows += q3.ExecNonQuery()
+                q3.ToString() ' => display execute query
 
                 accessor.Commit()
             Catch ex As Exception
                 accessor.RollBack()
             Finally
             End Try
+
+            MessageBox.Show("Execute DDL and Insertion " & insertionRows &" rows.")
         End Using
 
     End Sub
 
-    Private Sub sample()
+    Private Sub executeQuery()
         Dim acc = New ADOWrapper.DBAccessor
 
         Dim query1 = acc.CreateQuery
@@ -75,7 +77,7 @@ Public Class Form1
             .Add("@text", "test1")
         End With
         Dim dt = query1.ExecQuery()
-        MessageBox.Show(dt.Rows.Count.ToString)
+        MessageBox.Show(dt.Rows.Count.ToString & " rows found")
     End Sub
 
 End Class
