@@ -1,4 +1,8 @@
 ﻿
+Option Infer On
+
+Imports System
+
 ''' <summary>
 ''' データベースへの1コネクション/1トランザクションを表現するクラスです
 ''' </summary>

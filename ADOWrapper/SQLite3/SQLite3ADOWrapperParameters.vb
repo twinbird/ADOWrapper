@@ -1,5 +1,8 @@
-﻿
-Imports ADOWrapper
+﻿Option Infer On
+
+Imports System
+Imports System.Collections.Generic
+Imports System.Data
 
 ''' <summary>
 ''' SQLite3用のパラメータラッパー
@@ -77,7 +80,7 @@ Public Class SQLite3ADOWrapperParameters
     ''' </summary>
     ''' <returns></returns>
     Friend Function IsZero() As Boolean
-        Return m_paramDictionary.Count
+        Return m_paramDictionary.Count = 0
     End Function
 
 #End Region

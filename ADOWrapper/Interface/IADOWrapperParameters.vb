@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Option Infer On
+
+''' <summary>
 ''' ADO.NETのパラメータのうすーいラッパー
 ''' </summary>
 Public Interface IADOWrapperParameters

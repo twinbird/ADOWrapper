@@ -1,4 +1,10 @@
-﻿Public Class Form1
+﻿Option Infer On
+
+Imports System
+Imports System.Data
+Imports System.Windows.Forms
+
+Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         create()
@@ -69,7 +75,7 @@
             .Add("@text", "test1")
         End With
         Dim dt = query1.ExecQuery()
-        MessageBox.Show(dt.Rows.Count)
+        MessageBox.Show(dt.Rows.Count.ToString)
     End Sub
 
 End Class

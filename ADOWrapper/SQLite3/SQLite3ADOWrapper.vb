@@ -1,4 +1,7 @@
-﻿Imports ADOWrapper
+﻿Option Infer On
+
+Imports System
+Imports System.Data
 
 ''' <summary>
 ''' SQLite3向けのADO.NETのうすーいラッパー

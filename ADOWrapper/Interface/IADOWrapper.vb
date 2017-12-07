@@ -1,4 +1,9 @@
-﻿''' <summary>
+﻿Option Infer On
+
+Imports System
+Imports System.Data
+
+''' <summary>
 ''' ADO.NETのうすーいラッパーインターフェース
 ''' </summary>
 Public Interface IADOWrapper

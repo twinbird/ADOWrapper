@@ -1,4 +1,8 @@
-﻿''' <summary>
+﻿Option Infer On
+
+Imports System
+
+''' <summary>
 ''' クエリ構築のためのクラス
 ''' </summary>
 Public Class QueryBuilder
