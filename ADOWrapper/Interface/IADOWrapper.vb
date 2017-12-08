@@ -34,6 +34,12 @@ Public Interface IADOWrapper
     Function ExecNonQuery() As Integer
 
     ''' <summary>
+    ''' プロパティに設定された情報でクエリを発行します
+    ''' </summary>
+    ''' <returns>クエリ結果セットの最初の行の最初の列。結果セットが空の場合は、null</returns>
+    Function ExecScalar() As Object
+
+    ''' <summary>
     ''' 内部保持のSQLを返します
     ''' </summary>
     ''' <returns></returns>

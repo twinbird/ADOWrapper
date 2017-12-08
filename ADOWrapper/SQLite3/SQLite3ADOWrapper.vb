@@ -72,6 +72,17 @@ Public Class SQLite3ADOWrapper
     End Function
 
     ''' <summary>
+    ''' プロパティに設定された情報でクエリを発行します
+    ''' </summary>
+    ''' <returns>クエリ結果セットの最初の行の最初の列。結果セットが空の場合は、null</returns>
+    Public Function ExecScalar() As Object Implements IADOWrapper.ExecScalar
+        If m_query Is Nothing Then
+            Throw New Exception("Property 'SQL' is not set.")
+        End If
+        Return executeScalar()
+    End Function
+
+    ''' <summary>
     ''' 内部で保持しているSQLクエリを返します
     ''' </summary>
     ''' <returns></returns>
@@ -112,18 +123,6 @@ Public Class SQLite3ADOWrapper
 #Region "プライベートメソッド"
 
     ''' <summary>
-    ''' 影響行数だけを返すクエリを実行
-    ''' </summary>
-    ''' <returns>影響を与えた行数</returns>
-    Private Function executeNonQuery() As Integer
-        'コマンド生成
-        Dim command = createTextCommand(DirectCast(m_connection, SQLite.SQLiteConnection))
-
-        'クエリ実行
-        Return command.ExecuteNonQuery()
-    End Function
-
-    ''' <summary>
     ''' Textのコマンドを構築して返す
     ''' </summary>
     ''' <param name="con"></param>
@@ -148,6 +147,18 @@ Public Class SQLite3ADOWrapper
     End Function
 
     ''' <summary>
+    ''' 影響行数だけを返すクエリを実行
+    ''' </summary>
+    ''' <returns>影響を与えた行数</returns>
+    Private Function executeNonQuery() As Integer
+        'コマンド生成
+        Dim command = createTextCommand(DirectCast(m_connection, SQLite.SQLiteConnection))
+
+        'クエリ実行
+        Return command.ExecuteNonQuery()
+    End Function
+
+    ''' <summary>
     ''' クエリを実行して実行結果のデータテーブルを返す
     ''' </summary>
     ''' <returns></returns>
@@ -161,6 +172,17 @@ Public Class SQLite3ADOWrapper
         adapter.Fill(ds)
 
         Return ds.Tables(0)
+    End Function
+
+    ''' <summary>
+    ''' クエリを実行して実行結果の数値を返す
+    ''' </summary>
+    ''' <returns>結果セットの最初の行の最初の列。結果セットが空の場合は、null</returns>
+    Private Function executeScalar() As Object
+        'コマンド生成
+        Dim command = createTextCommand(DirectCast(m_connection, SQLite.SQLiteConnection))
+
+        Return command.ExecuteScalar()
     End Function
 
 #End Region
