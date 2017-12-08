@@ -1,4 +1,5 @@
-﻿Option Infer On
+﻿Option Strict On
+Option Infer On
 
 Imports System
 Imports System.Collections.Generic

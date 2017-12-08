@@ -1,4 +1,5 @@
-﻿Option Infer On
+﻿Option Strict On
+Option Infer On
 
 Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
@@ -155,7 +156,7 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
             Dim expects = New List(Of String)({"text1", "text2", "text3", "text4"})
 
-            For Each row In dt.Rows
+            For Each row As DataRow In dt.Rows
                 Assert.IsTrue(expects.Contains(row("text").ToString()))
             Next
         End Using

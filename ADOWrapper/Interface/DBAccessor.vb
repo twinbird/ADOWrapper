@@ -1,4 +1,4 @@
-﻿
+﻿Option Strict On
 Option Infer On
 
 Imports System
